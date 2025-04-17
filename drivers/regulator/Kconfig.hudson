@@ -1,0 +1,18 @@
+# Copyright (c) 2025, Analog Devices
+# SPDX-License-Identifier: Apache-2.0
+
+config REGULATOR_HUDSON
+	bool "Analog Devices HUDSON PMIC driver"
+	default y
+	depends on DT_HAS_ADI_HUDSON_PMIC_ENABLED
+	depends on I2C
+	help
+	  Enable the ADI HUDSON PMIC driver
+
+config REGULATOR_HUDSON_INIT_PRIORITY
+	int "Analog Devices HUDSON PMIC peripehral driver init priority"
+	default 60
+	depends on DT_HAS_ADI_HUDSON_PMIC_ENABLED
+	help
+	  Init priority for the Analog Devices HUDSON PMIC peripehral.
+

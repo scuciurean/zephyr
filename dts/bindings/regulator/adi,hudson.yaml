@@ -1,0 +1,83 @@
+# Copyright (c), 2025 Analog Devices
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Analog Devices HUDSON PMIC
+
+  The PMIC has three buck converters and four LDOs
+
+  Example:
+
+  pmic@46 {
+      compatible = "adi,hudson-pmic"
+      reg = <0x46>;
+
+      		buck0: buck0 {
+      			status = "okay";
+      			adi,turn-on-delay-us = <100>;
+      			adi,turn-off-delay-us = <100>;
+      			adi,rok-delay-us = <50>;
+      			adi,trim-ilr = <2>;
+      			adi,trim-vreg = <4>;
+      		};
+
+
+      		ldo0: ldo0 {
+      			status = "okay";
+      			adi,turn-on-delay-us = <50>;
+      			adi,turn-off-delay-us = <50>;
+      		};
+
+          ...
+
+      };
+  };
+
+compatible: "adi,hudson-pmic"
+
+include: base.yaml
+
+child-binding:
+  include:
+    - name: regulator.yaml
+      property-allowlist:
+        - regulator-always-on
+        - regulator-boot-on
+        - regulator-boot-off
+        - regulator-min-microvolt
+        - regulator-max-microvolt
+        - regulator-allowed-modes
+        - regulator-initial-mode
+
+  properties:
+    adi,turn-on-delay-us:
+      type: int
+      description: |
+        Configurable Delays for Turn-on Sequence. Delays
+        the assertion of the enable signal during turn-on sequence.
+        Supports 0-50ms with time resolution of ~100us.
+
+    adi,turn-off-delay-us:
+      type: int
+      description: |
+        Configurable Delays for Turn-off Sequence.
+        Delays the de-assertion of the enable signal during turn-
+        off sequence.
+        Supports 0-50ms with time resolution of ~100us.
+
+    adi,rok-delay-us:
+      type: int
+      description: |
+        Delay Parameters for ROK Signal. It represents the delay between
+        the enable assertion and rising edge of ROK.
+        Supports 0-10ms with time resolution of ~100us.
+
+    adi,trim-ilr:
+      type: int
+      description: |
+        Inductor Current Ripple Trim. 3-bit control to trim inductor current ripple.
+
+    adi,trim-vreg:
+      type: int
+      description: |
+        Output Voltage Trim. 5-bit control to trim the output voltage.
