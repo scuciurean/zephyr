@@ -1,0 +1,83 @@
+description: |
+  Analog Devices HUDSON PMIC
+
+  The PMIC has three buck converters and four LDOs, wit an
+  additional LDO used as over-voltage protection module.
+
+  Example:
+
+  pmic@46 {
+      compatible = "adi,hudson-pmic"
+      reg = <0x46>;
+
+      regulators {
+
+          BUCK0 {
+              regulator-boot-on;
+              regulator-init-microvolt = <3300000>;
+              regulator-min-microvolt = <3000000>;
+              regulator-max-microvolt = <3300000>;
+          };
+
+          BUCK1 {
+              regulator-always-on;
+              regulator-init-microvolt = <5000000>;
+              regulator-min-microvolt = <4500000>;
+              regulator-max-microvolt = <5000000>;
+          };
+
+          ...
+
+      };
+  };
+  }
+
+compatible: "adi,hudson-pmic"
+
+include: base.yaml
+
+child-binding:
+  include:
+    - name: regulator.yaml
+      property-allowlist:
+        - regulator-always-on
+        - regulator-boot-on
+        - regulator-boot-off
+        - regulator-min-microvolt
+        - regulator-max-microvolt
+        - regulator-allowed-modes
+        - regulator-initial-mode
+
+  properties:
+    adi,turn-on-delay-us:
+      required: false
+      type: int
+      description: |
+        Configurable Delays for Turn-on Sequence. Delays
+        the assertion of the enable signal during turn-on sequence.
+        Supports 0-50ms with time resolution of ~100us.
+    adi,turn-off-delay-us:
+      required: false
+      type: int
+      description: |
+        Configurable Delays for Turn-off Sequence.
+        Delays the de-assertion of the enable signal during turn-
+        off sequence.
+        Supports 0-50ms with time resolution of ~100us.
+    adi,rok-delay-us:
+      required: false
+      type: int
+      description: |
+        Delay Parameters for ROK Signal. It represents the delay between
+        the enable assertion and rising edge of ROK.
+        Supports 0-10ms with time resolution of ~100us.
+    adi,trim-ilr:
+      required: false
+      type: int
+      description: |
+        Inductor Current Ripple Trim. 3-bit control to trim inductor current ripple.
+    adi,trim-vreg:
+      required: false
+      type: int
+      description: |
+        Output Voltage Trim. 5-bit control to trim the output voltage.
