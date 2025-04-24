@@ -1,0 +1,15 @@
+include: [adc-controller.yaml, i2c-device.yaml]
+
+compatible: "adi,hudson-adc"
+
+description: Binding for the ADI HUDSON ADC.
+
+properties:
+  vref-mv:
+    type: int
+    description: |
+      The reference voltage in millivolts. This is used to calculate the
+      conversion value from the raw ADC value.
+
+io-channel-cells:
+  - input
