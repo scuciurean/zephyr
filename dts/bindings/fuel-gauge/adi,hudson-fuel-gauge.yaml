@@ -1,0 +1,26 @@
+include: [i2c-device.yaml, fuel-gauge.yaml, sensor-device.yaml]
+
+compatible: "adi,hudson-fuel-gauge"
+
+description: |
+  ADI Hudson Fuel Gauge with
+
+properties:
+  adc:
+    type: phandle
+    description: |
+      The ADC used to read the fuel gauge voltage. This is used to calculate
+      the fuel gauge voltage from the raw ADC value.
+    required: true
+
+  io-channels:
+    type: phandle-array
+    required: true
+    description: |
+      The ADC channels used to read multiple fuel gauge properties
+
+  io-channels-names:
+    type: string-array
+    required: true
+    description: |
+      The labels associated with the ADC channels

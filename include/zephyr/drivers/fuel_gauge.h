@@ -100,6 +100,8 @@ enum fuel_gauge_prop_type {
 	FUEL_GAUGE_DEVICE_NAME,
 	/** Chemistry (1 byte length + 4 bytes data) */
 	FUEL_GAUGE_DEVICE_CHEMISTRY,
+	/** Indicates the presence of moisture in the device, measured as grams of water per cubic meter of air (g/m^3) */
+	FUEL_GAUGE_MOISTURE,
 
 	/** Reserved to demark end of common fuel gauge properties */
 	FUEL_GAUGE_COMMON_COUNT,
@@ -174,6 +176,8 @@ union fuel_gauge_prop_val {
 	uint16_t sbs_remaining_capacity_alarm;
 	/** FUEL_GAUGE_SBS_REMAINING_TIME_ALARM */
 	uint16_t sbs_remaining_time_alarm;
+	/** FUEL_GAUGE_MOISTURE */
+	uint16_t moisture;
 };
 
 /**
