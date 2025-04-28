@@ -14,6 +14,7 @@ int adc_gain_invert(enum adc_gain gain,
 		uint8_t div;
 	};
 	static const struct gain_desc gains[] = {
+		[ADC_GAIN_1_7] = {.mul = 7, .div = 1},
 		[ADC_GAIN_1_6] = {.mul = 6, .div = 1},
 		[ADC_GAIN_1_5] = {.mul = 5, .div = 1},
 		[ADC_GAIN_1_4] = {.mul = 4, .div = 1},
@@ -29,7 +30,9 @@ int adc_gain_invert(enum adc_gain gain,
 		[ADC_GAIN_4] = {.mul = 1, .div = 4},
 		[ADC_GAIN_6] = {.mul = 1, .div = 6},
 		[ADC_GAIN_8] = {.mul = 1, .div = 8},
+		[ADC_GAIN_10] = {.mul = 1, .div = 10},
 		[ADC_GAIN_12] = {.mul = 1, .div = 12},
+		[ADC_GAIN_14] = {.mul = 1, .div = 14},
 		[ADC_GAIN_16] = {.mul = 1, .div = 16},
 		[ADC_GAIN_24] = {.mul = 1, .div = 24},
 		[ADC_GAIN_32] = {.mul = 1, .div = 32},
