@@ -1,0 +1,86 @@
+/ {
+	aliases {
+		hudsonpmic = &hudsonpmic;
+		buck0 = &buck0;
+		buck1 = &buck1;
+		buck2 = &buck2;
+		ldo0 = &ldo0;
+		ldo1 = &ldo1;
+		ldo2 = &ldo2;
+		ldo3 = &ldo3;
+	};
+	fake_i2c_bus: i2c@100 {
+		status = "okay";
+		compatible = "zephyr,i2c-emul-controller";
+		clock-frequency = <I2C_BITRATE_STANDARD>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x100 4>;
+	};
+};
+
+&pinctrl {
+	i2c1_default_alt: i2c1_default_alt {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SDA, 0, 4)>,
+					<NRF_PSEL(TWIM_SCL, 0, 5)>;
+		};
+	};
+};
+
+&fake_i2c_bus {
+    hudsonpmic: pmic@10 {
+		status = "okay";
+        compatible = "adi,hudson-pmic";
+        reg = <0x10>;
+
+		buck0: buck0 {
+			status = "okay";
+			adi,turn-on-delay-us = <100>;
+			adi,turn-off-delay-us = <100>;
+			adi,rok-delay-us = <50>;
+			adi,trim-ilr = <0>;
+			adi,trim-vreg = <0>;
+		};
+
+		buck1: buck1 {
+			status = "okay";
+			regulator-always-on;
+			adi,turn-on-delay-us = <100>;
+			adi,turn-off-delay-us = <100>;
+			adi,rok-delay-us = <50>;
+		};
+
+		buck2: buck2 {
+			status = "okay";
+			regulator-always-on;
+			adi,turn-on-delay-us = <100>;
+			adi,turn-off-delay-us = <100>;
+			adi,rok-delay-us = <50>;
+		};
+
+		ldo0: ldo0 {
+			status = "okay";
+			adi,turn-on-delay-us = <50>;
+			adi,turn-off-delay-us = <50>;
+		};
+
+		ldo1: ldo1 {
+			status = "okay";
+			adi,turn-on-delay-us = <50>;
+			adi,turn-off-delay-us = <50>;
+		};
+
+		ldo2: ldo2 {
+			status = "okay";
+			adi,turn-on-delay-us = <50>;
+			adi,turn-off-delay-us = <50>;
+		};
+
+		ldo3: ldo3 {
+			status = "okay";
+			adi,turn-on-delay-us = <50>;
+			adi,turn-off-delay-us = <50>;
+		};
+    };
+};
