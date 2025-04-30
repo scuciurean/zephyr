@@ -5,3 +5,11 @@ config FUEL_GAUGE_HUDSON
 	depends on ADC_HUDSON
 	help
 	  Enable driver for the hudson fuel gauge device.
+
+config EMUL_HUDSON_GAUGE
+	bool "Emulate hudson fuel gague"
+	default y
+	depends on EMUL
+	depends on FUEL_GAUGE_HUDSON
+	help
+	  It provides read/write emulations for the fuel gauge

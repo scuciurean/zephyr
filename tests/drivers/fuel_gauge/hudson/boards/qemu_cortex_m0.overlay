@@ -1,0 +1,94 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/ {
+	aliases {
+		hudsonadc = &hudsonadc;
+		hudsonfuelgauge = &hudsonfuelgauge;
+	};
+	fake_i2c_bus: i2c@100 {
+		status = "okay";
+		compatible = "zephyr,i2c-emul-controller";
+		clock-frequency = <I2C_BITRATE_STANDARD>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <100 4>;
+	};
+};
+
+&fake_i2c_bus {
+    hudsonadc: adc@48 {
+		status = "okay";
+        compatible = "adi,hudson-adc";
+        reg = <0x48>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		#io-channel-cells = <1>;
+		vref-mv = <4096>;
+
+		// vBatt
+        vbatt: channel@0 {
+            reg = <0>;
+			zephyr,gain = "ADC_GAIN_1_7";
+			zephyr,reference = "ADC_REF_INTERNAL";
+			zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+			zephyr,resolution = <16>;
+        };
+
+		// iSense
+        ibatt: channel@1 {
+            reg = <1>;
+			zephyr,gain = "ADC_GAIN_12";
+			zephyr,reference = "ADC_REF_INTERNAL";
+			zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+			zephyr,resolution = <16>;
+        };
+
+		// vThermistor
+		batttemp: channel@2 {
+			reg = <2>;
+			zephyr,gain = "ADC_GAIN_1_2";
+			zephyr,reference = "ADC_REF_INTERNAL";
+			zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+			zephyr,resolution = <16>;
+		};
+
+		// vThermistorBias
+		dietemp: channel@3 {
+			reg = <3>;
+			zephyr,gain = "ADC_GAIN_1_4";
+			zephyr,reference = "ADC_REF_INTERNAL";
+			zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+			zephyr,resolution = <16>;
+		};
+
+		// vCM Tempsense
+		chgtemp: channel@4 {
+			reg = <4>;
+			zephyr,gain = "ADC_GAIN_1_2";
+			zephyr,reference = "ADC_REF_INTERNAL";
+			zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+			zephyr,resolution = <16>;
+		};
+
+		moisture: channel@5 {
+			reg = <5>;
+			zephyr,gain = "ADC_GAIN_1";
+			zephyr,reference = "ADC_REF_INTERNAL";
+			zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+			zephyr,resolution = <16>;
+		};
+    };
+
+	hudsonfuelgauge: fuelgauge@48 {
+		compatible = "adi,hudson-fuel-gauge";
+		reg = <0x48>;
+		status = "okay";
+		adc = <&hudsonadc>;
+		io-channels = <&hudsonadc 0>, <&hudsonadc 1>, <&hudsonadc 2>,
+						<&hudsonadc 3>, <&hudsonadc 4>, <&hudsonadc 5>;
+		io-channels-names = "VBATT", "IBATT", "BATT-TEMP",
+							 "DIE-TEMP", "CHG-TEMP", "MOISTURE";
+	};
+};

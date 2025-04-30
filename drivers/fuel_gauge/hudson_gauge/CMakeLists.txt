@@ -1,3 +1,5 @@
 zephyr_library()
 
 zephyr_library_sources(hudson_gauge.c)
+zephyr_include_directories_ifdef(CONFIG_EMUL_HUDSON_GAUGE .)
+zephyr_library_sources_ifdef(CONFIG_EMUL_HUDSON_GAUGE emul_hudson_gauge.c)

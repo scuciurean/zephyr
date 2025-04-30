@@ -1,0 +1,9 @@
+tests:
+  drivers.fuel_gauge.hudson_fuel_gauge:
+    tags:
+      - drivers
+      - fuel_gauge
+    filter: dt_compat_enabled("adi,hudson-fuel-gauge")
+    platform_allow:
+      - native_sim
+      - qemu_cortex_m0
